@@ -6,3 +6,10 @@ Project made during 6th semester (02.2021 - 06.2021) of my studies with my frien
 * implementing flight trajectory and option to gather and plot all the important data
 * wrapping it up in simple GUI
 * preparing final documentation
+
+
+**Project environment:**
+* Ubuntu 18.04 LTS (virtualized, VMware)
+* MATLAB R2021a + ROS Toolbox
+* ROS Melodic, Gazebo/Sphinx
+* [bebop_autonomy](https://bebop-autonomy.readthedocs.io/en/latest/) - ROS Driver for Parrot Bebop 1.0/2.0 
