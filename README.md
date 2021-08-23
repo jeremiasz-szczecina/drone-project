@@ -15,4 +15,5 @@ Project made during 6th semester (02.2021 - 06.2021) of my studies with my frien
 * [bebop_autonomy](https://bebop-autonomy.readthedocs.io/en/latest/) - ROS Driver for Parrot Bebop 1.0/2.0 
 * g2r_repeater node - .pyc file **provided by our project supervisor**, translates drone's pose from Gazebo to ROS
 
-![ROS structure in rqt_graph](https://imgur.com/a/AocNA9v)
+![ROS structure in rqt_graph](https://i.imgur.com/uOfaEgF.png)
+
