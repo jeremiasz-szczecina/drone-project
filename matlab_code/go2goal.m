@@ -19,40 +19,40 @@ move_msg.Angular.Z = 0.0;
 RST_handler = ReferenceSystemTransformer();
 target_pos = [0;0;0;0];
 
-%WCZYTANIE PLIKU Z TRAJEKTORIAMI
-waypoints = csvread('trajectories.csv'); %wczytanie wektora danych (x, 4)
-siz = size(waypoints); %okreslenie rozmiaru
-num_iterations = siz(1); %rozmiar jest 1x2, wiec wybranie ilosci wierszy
+% READING FILE WITH TRAJECTORIES
+waypoints = csvread('trajectories.csv'); % reading vector of size (x, 4)
+siz = size(waypoints); 
+num_iterations = siz(1); % saving x-dimension to variable
 
 disp('Bebop has received a new task to do')
 
 PID_error_locked = true;
-%INICJALIZACJA REGULATORA PID
+% INITIALIZING PID INSTANCE
 global PID_handler;
 PID_handler = PID();
 PID_error_locked = false;
 disp('On a mission!')
 
-pid_trigger = 0.01; %dokladnosc
+pid_trigger = 0.01; % tolerance
 
 for i = 1:num_iterations
-    %zadawanie kolejnych koordynatow
+    % setting coordinates
     target_pos(1) = waypoints(i,1);
     target_pos(2) = waypoints(i,2);
     target_pos(3) = waypoints(i,3);
     target_pos(4) = waypoints(i,4);
     PID_handler = PID_handler.reset_errors_list();
-    % bazowe domyslne predkosci - 100% zakresu okreslonego parametrem
-    % max_param_value w klasie PID
+    % default velocities - 1.0 means 100% of value assigned in
+    % max_param_value in PID-class instance
     PID_resultX = 1.0;
     PID_resultY = 1.0;
     PID_resultZ = 1.0;
     PID_resultYAW = 1.0;
     loop_cond = 0;
-    % petla sterujaca, nastepny obrot nastepuje po dotarciu do kolejnych
-    % kooordynatow we WSZYSTKICH osiach
+    % steering loop, it jumps to the next iteration whenever drone reaches the goal
+    % in every axis
     while (abs(PID_resultX) > pid_trigger) || (loop_cond < 360) || (abs(PID_resultY) > pid_trigger) || (abs(PID_resultZ) > pid_trigger) || (abs(PID_resultYAW) > pid_trigger) 
-        % obliczanie potrzebnej do zadania predkosci
+        % calculating velocity to publish
         PID_resultX = PID_handler.calculate("X");
         PID_resultY = PID_handler.calculate("Y");
         PID_resultZ = PID_handler.calculate("Z");
@@ -61,11 +61,11 @@ for i = 1:num_iterations
         move_msg.Linear.Y = PID_resultY;
         move_msg.Linear.Z = PID_resultZ;
         move_msg.Angular.Z = PID_resultYAW;
-        % publikowanie wiadomosci Twist, by poruszyc UAV
+        % publishing Twist msg
         send(move, move_msg);
         waitfor(loop_rate);
         loop_cond = loop_cond + 1;
-        % zapisywanie polozen do pliku
+        % saving target positions and drone's current position to file
         fprintf(fileID_track, '%.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f\n', target_pos(1), target_pos_norm(1), current_pos(1), target_pos(2), target_pos_norm(2), current_pos(2), target_pos(3), current_pos(3), target_pos(4), current_pos(4));
     end
 end
