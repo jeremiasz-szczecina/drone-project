@@ -1,6 +1,6 @@
 function num = determine_param(param)
-% funkcja pozwalajaca okreslic odwolanie do konkretnej osi poprzez
-% podawanie argumentu typu string oznaczajacego zadana os
+% function that allows to reach (later in the code) particular axis, by simply passing string argument
+% rather than integer; way more intuitive
             num = 0;
             if param == "X"
                 num = 1;
