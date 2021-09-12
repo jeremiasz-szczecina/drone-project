@@ -14,7 +14,7 @@ current_pos(2) = -x_val*sin(yaw_val(1)) + y_val*cos(yaw_val(1));
 current_pos(3) = message.Pose.Pose.Position.Z;
 current_pos(4) = yaw_val(1);
 
-%normalizacja zadawanych polozen ze wzgledu na rozne uklady odniesienia
+% normalization of target positions because of different coordinate systems (drone/gazebo)
 target_pos_norm(1) = (target_pos(1) * cos(current_pos(4))) + (target_pos(2) * sin(current_pos(4)));
 target_pos_norm(2) = (-target_pos(1) * sin(current_pos(4))) + (target_pos(2) * cos(current_pos(4)));
 
