@@ -1,18 +1,15 @@
 function initialise_all()
-% GLOWNY PLIK, INICJALIZUJACY I DEFINIUJACY WSZYSTKO
+% MAIN FILE, THAT INITIALIZES AND DEFINES ENVIRONMENT
 
-% LISTA GLOBALNYCH ZMIENNYCH, INICJALIZOWANYCH W TYM KODZIE:
-% 1) takeoff -> publisher od wznoszenia sie
-% 2) land -> publisher od ladowania
-% 3) loop_trigger -> publisher wysylajacy puste info-wyzwalacz do glownej
-% funkcji sterujacej
-% 4) control loop -> subscriber wyzwalajacy glowna funkcje latania
-% 5) pose_getter -> subscriber pobierający dane z odometrii drona z f=56Hz
-% 6) current_pos -> kontener, w ktorym przechowywane będą aktualne dane o
-% pozycji drona
-% 7/8) target_pos / target_pos_norm -> kontener, w ktorym przechowywane będą koordynaty do
-% ktorych dron ma doleciec
-% 9) move -> publisher od nadawania predkosci
+% LIST OF GLOBAL VARIABLES STORED AND INITIALIZED IN THIS CODE:
+% 1) takeoff -> publisher from taking off
+% 2) land -> publisher from landing
+% 3) loop_trigger -> publisher that sends empty message - it triggers main steering function
+% 4) control loop -> subscriber that starts main flying function
+% 5) pose_getter -> subscriber responsible for acquiring drone's odometry data with 55-60 Hz frequency
+% 6) current_pos -> container, where drone's current position is stored
+% 7/8) target_pos / target_pos_norm -> container that keeps coordinates which drone has to reach
+% 9) move -> publisher that sets proper velocities
 
             disp('Drone connected, ready to go')
             global takeoff; global land; global move; global pose_getter;
